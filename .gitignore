@@ -1,0 +1,36 @@
+# ключи и учётные данные
+.fishkey
+*.key
+.env
+
+# файлы игры — никогда в репозиторий
+*.tiger
+*.tiger.bak
+*.bik
+*.mdmp
+
+# собранный патч и релизные архивы — в Releases, не в git
+dist/
+*.lc2p
+*.rar
+*.7z
+*.zip
+
+# аудио пайплайна
+vo_wav/
+vo_wav_1card/
+vo_ru/
+vo96/
+vo_en/
+*.wav
+*.mp3
+*.fsb
+
+# промежуточные данные
+__pycache__/
+*.pyc
+compare/
+oracle/
+verify_tmp/
+fsbankex_official/
+*.log
