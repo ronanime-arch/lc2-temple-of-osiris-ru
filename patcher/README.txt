@@ -62,8 +62,11 @@ PowerShell, который уже есть в Windows.
 Голоса - публичные модели из библиотеки fish.audio, не клоны
 оригинальных актёров.
 
-Исходники и технические подробности:
-https://github.com/find77/lc2-temple-of-osiris-ru
+Исходники, технические подробности, свежие версии:
+https://github.com/ronanime-arch/lc2-temple-of-osiris-ru
+
+Поддержать автора:
+https://boosty.to/find77
 
 Lara Croft and the Temple of Osiris (c) Crystal Dynamics / Square Enix.
 Проект не связан с правообладателями и файлов игры не распространяет.

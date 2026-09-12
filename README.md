@@ -130,6 +130,11 @@ fish.audio, и результат будет другим: у модели не�
 это модификация уже установленной легальной копии. Lara Croft and the Temple of
 Osiris © Crystal Dynamics / Square Enix; проект не связан с правообладателями.
 
+## Ссылки
+
+- Сборки — [Releases](../../releases)
+- Boosty — <https://boosty.to/find77>
+
 ## Лицензия
 
 Код — MIT, см. [LICENSE](LICENSE). На аудио, полученное из синтеза, действуют
