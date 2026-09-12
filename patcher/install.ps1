@@ -55,23 +55,36 @@ if ($Restore) {
 if (-not $Patch) { $Patch = Join-Path $here 'lc2_ru.lc2p' }
 if (-not (Test-Path $Patch)) { Fail "файл патча не найден: $Patch" }
 
-# --- резервная копия ----------------------------------------------------
-if (Test-Path $bak) {
-    Info "Резервная копия уже есть, ставим поверх неё: $ARC.bak"
-    Copy-Item $bak $arc -Force
-} else {
-    Info 'Делаю резервную копию (около минуты)...'
-    Copy-Item $arc $bak
-    Ok "Резерв: $ARC.bak — не удаляйте его."
-}
-
-Info 'Читаю файл игры...'
-$d = [System.IO.File]::ReadAllBytes($arc)
+# --- что сейчас лежит в папке игры --------------------------------------
+# Сначала считаем хеш и только потом решаем, трогать ли резерв: иначе можно
+# затереть свежий файл (например, починенный проверкой целостности Steam)
+# устаревшей резервной копией.
+Info 'Проверяю файл игры...'
 $sha = (Get-FileHash -Path $arc -Algorithm SHA256).Hash
 if ($sha -eq $DST_SHA) {
     Ok 'Русская озвучка уже стоит. Ничего делать не нужно.'
     Halt; exit 0
 }
+
+if (-not (Test-Path $bak)) {
+    Info 'Делаю резервную копию (около минуты)...'
+    Copy-Item $arc $bak
+    Ok "Резерв: $ARC.bak — не удаляйте его."
+} elseif ($sha -ne $SRC_SHA) {
+    # файл не оригинал и не наш результат: если резерв — чистый оригинал,
+    # откатываемся на него, иначе оставляем как есть и патчим поверх
+    # (патч идемпотентен: он перезаписывает байты, а не дописывает их)
+    if ((Get-FileHash -Path $bak -Algorithm SHA256).Hash -eq $SRC_SHA) {
+        Info 'Файл изменён; беру чистый оригинал из резервной копии.'
+        Copy-Item $bak $arc -Force
+        $sha = $SRC_SHA
+    }
+} else {
+    Info "Резервная копия уже есть: $ARC.bak"
+}
+
+Info 'Читаю файл игры...'
+$d = [System.IO.File]::ReadAllBytes($arc)
 if ($sha -ne $SRC_SHA) {
     Write-Host ''
     Write-Host 'ВНИМАНИЕ: этот bigfile_ENGLISH.000.tiger отличается от того,' -ForegroundColor Yellow

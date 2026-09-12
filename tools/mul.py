@@ -24,7 +24,8 @@ import struct, os
 SLOT = 316
 MAGIC = b'\xcd' * 8
 HDR = 16                      # u32 size, u32 type, 8 байт магии
-GAME = os.path.join('D:', os.sep, 'Games', 'Lara Croft - Temple of Osiris', 'Game')
+GAME = os.environ.get('LC2_GAME') or os.path.join(
+    'D:', os.sep, 'Games', 'Lara Croft - Temple of Osiris', 'Game')
 ARC = os.path.join(GAME, 'bigfile_ENGLISH.000.tiger')
 BAK = ARC + '.bak'
 
